@@ -627,6 +627,7 @@ IO_STORAGES_IMPORT_LINK_NAMES = [
     'io_storages_azureblobimportstoragelink',
     'io_storages_localfilesimportstoragelink',
     'io_storages_redisimportstoragelink',
+    'io_storages_databricksvolumesimportstoragelink',
 ]
 
 CREATE_ORGANIZATION = 'organizations.functions.create_organization'

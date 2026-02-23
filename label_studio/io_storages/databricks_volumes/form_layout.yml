@@ -1,0 +1,131 @@
+# Databricks Unity Catalog Volumes storage form layout
+
+databricks_credentials: &databricks_credentials
+  - type: password
+    name: databricks_client_id
+    label: Client ID
+    autoComplete: "new-password"
+    skipAutofill: true
+    allowEmpty: false
+  - type: password
+    name: databricks_client_secret
+    label: Client Secret
+    autoComplete: "new-password"
+    skipAutofill: true
+    allowEmpty: false
+
+ImportStorage:
+  # Title, Volume Name, Prefix
+  - columnCount: 3
+    fields:
+      - type: text
+        name: title
+        label: Storage Name
+        required: true
+      - type: text
+        name: volume
+        label: Volume Name
+        required: true
+      - type: text
+        name: prefix
+        label: Prefix
+
+  # Catalog, Schema
+  - columnCount: 2
+    fields:
+      - type: text
+        name: catalog
+        label: Catalog
+        required: true
+      - type: text
+        name: schema_name
+        label: Schema
+        required: true
+
+  # Databricks Host
+  - columnCount: 1
+    fields:
+      - type: text
+        name: databricks_host
+        label: Databricks Host
+        placeholder: "https://dbc-xxx.cloud.databricks.com"
+        required: true
+
+  # Credentials
+  - columnCount: 2
+    fields: *databricks_credentials
+
+  # Regex filter
+  - columnCount: 1
+    fields:
+      - type: text
+        name: regex_filter
+        label: File Filter Regex
+        placeholder: '.*csv or .*(jpe?g|png|tiff) or .\w+-\d+.text'
+        validators:
+          - regexp
+
+  # Import method selection
+  - columnCount: 1
+    fields:
+      - type: select
+        name: use_blob_urls
+        label: Import method
+        description: Choose how to import your data from storage
+        placeholder: "Select an option"
+        required: true
+        options:
+          - value: true
+            label: "Files - Automatically creates a task for each storage object (e.g. JPG, MP3, TXT)"
+          - value: false
+            label: "Tasks - Treat each JSON or JSONL file as a task definition (one or more tasks per file)"
+
+  # Recursive scan
+  - columnCount: 1
+    fields:
+      - type: toggle
+        name: recursive_scan
+        label: Recursive scan
+        description: "Scan nested directories within the volume"
+        value: false
+
+ExportStorage:
+  # Title, Volume Name, Prefix
+  - columnCount: 3
+    fields:
+      - type: text
+        name: title
+        label: Storage Name
+        required: true
+      - type: text
+        name: volume
+        label: Volume Name
+        required: true
+      - type: text
+        name: prefix
+        label: Prefix
+
+  # Catalog, Schema
+  - columnCount: 2
+    fields:
+      - type: text
+        name: catalog
+        label: Catalog
+        required: true
+      - type: text
+        name: schema_name
+        label: Schema
+        required: true
+
+  # Databricks Host
+  - columnCount: 1
+    fields:
+      - type: text
+        name: databricks_host
+        label: Databricks Host
+        placeholder: "https://dbc-xxx.cloud.databricks.com"
+        required: true
+
+  # Credentials
+  - columnCount: 2
+    fields: *databricks_credentials

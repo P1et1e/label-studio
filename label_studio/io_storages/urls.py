@@ -23,6 +23,19 @@ from io_storages.azure_blob.api import (
     AzureBlobImportStorageSyncAPI,
     AzureBlobImportStorageValidateAPI,
 )
+from io_storages.databricks_volumes.api import (
+    DatabricksVolumesExportStorageDetailAPI,
+    DatabricksVolumesExportStorageFormLayoutAPI,
+    DatabricksVolumesExportStorageListAPI,
+    DatabricksVolumesExportStorageSyncAPI,
+    DatabricksVolumesExportStorageValidateAPI,
+    DatabricksVolumesImportStorageDetailAPI,
+    DatabricksVolumesImportStorageFormLayoutAPI,
+    DatabricksVolumesImportStorageListAPI,
+    DatabricksVolumesImportStorageSyncAPI,
+    DatabricksVolumesImportStorageValidateAPI,
+)
+from io_storages.databricks_volumes.serializers import DatabricksVolumesImportStorageSerializer
 from io_storages.gcs.api import (
     GCSExportStorageDetailAPI,
     GCSExportStorageFormLayoutAPI,
@@ -134,6 +147,22 @@ _api_urlpatterns = [
     path('export/gcs/<int:pk>/sync', GCSExportStorageSyncAPI.as_view(), name='export-storage-gcs-sync'),
     path('export/gcs/validate', GCSExportStorageValidateAPI.as_view(), name='export-storage-gcs-validate'),
     path('export/gcs/form', GCSExportStorageFormLayoutAPI.as_view(), name='export-storage-gcs-form'),
+    # Databricks Unity Catalog Volumes
+    path('databricks_volumes/', DatabricksVolumesImportStorageListAPI.as_view(), name='storage-databricks-volumes-list'),
+    path('databricks_volumes/<int:pk>', DatabricksVolumesImportStorageDetailAPI.as_view(), name='storage-databricks-volumes-detail'),
+    path('databricks_volumes/<int:pk>/sync', DatabricksVolumesImportStorageSyncAPI.as_view(), name='storage-databricks-volumes-sync'),
+    path('databricks_volumes/validate', DatabricksVolumesImportStorageValidateAPI.as_view(), name='storage-databricks-volumes-validate'),
+    path('databricks_volumes/form', DatabricksVolumesImportStorageFormLayoutAPI.as_view(), name='storage-databricks-volumes-form'),
+    path(
+        'databricks_volumes/files',
+        ImportStorageListFilesAPI().as_view(serializer_class=DatabricksVolumesImportStorageSerializer),
+        name='storage-databricks-volumes-list-files',
+    ),
+    path('export/databricks_volumes', DatabricksVolumesExportStorageListAPI.as_view(), name='export-storage-databricks-volumes-list'),
+    path('export/databricks_volumes/<int:pk>', DatabricksVolumesExportStorageDetailAPI.as_view(), name='export-storage-databricks-volumes-detail'),
+    path('export/databricks_volumes/<int:pk>/sync', DatabricksVolumesExportStorageSyncAPI.as_view(), name='export-storage-databricks-volumes-sync'),
+    path('export/databricks_volumes/validate', DatabricksVolumesExportStorageValidateAPI.as_view(), name='export-storage-databricks-volumes-validate'),
+    path('export/databricks_volumes/form', DatabricksVolumesExportStorageFormLayoutAPI.as_view(), name='export-storage-databricks-volumes-form'),
     # Redis DB
     path('redis/', RedisImportStorageListAPI.as_view(), name='storage-redis-list'),
     path('redis/<int:pk>', RedisImportStorageDetailAPI.as_view(), name='storage-redis-detail'),

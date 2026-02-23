@@ -96,6 +96,7 @@ export const StorageSummary = ({ target, storage, className, storageTypes = [] }
           <AzureStorage case="azure" storage={storage} />
           <RedisStorage case="redis" storage={storage} />
           <LocalStorage case="localfiles" storage={storage} />
+          <DatabricksVolumesStorage case="databricks_volumes" storage={storage} />
         </Oneof>
 
         <DescriptionList.Item
@@ -175,4 +176,14 @@ const RedisStorage = ({ storage }) => {
 
 const LocalStorage = ({ storage }) => {
   return <DescriptionList.Item term="Path">{storage.path}</DescriptionList.Item>;
+};
+
+const DatabricksVolumesStorage = ({ storage }) => {
+  return (
+    <>
+      <DescriptionList.Item term="Catalog">{storage.catalog}</DescriptionList.Item>
+      <DescriptionList.Item term="Schema">{storage.schema_name}</DescriptionList.Item>
+      <DescriptionList.Item term="Volume">{storage.volume}</DescriptionList.Item>
+    </>
+  );
 };

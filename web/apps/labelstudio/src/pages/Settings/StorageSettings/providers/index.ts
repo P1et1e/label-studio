@@ -1,6 +1,7 @@
 import azureProvider from "./azure";
 import azureSpiProvider from "./azure_spi";
 import databricksProvider from "./databricks";
+import { databricksVolumesProvider } from "./databricks_volumes";
 import gcsProvider from "./gcs";
 import gcsWifProvider from "./gcswif";
 import localFilesProvider from "./localFiles";
@@ -19,6 +20,7 @@ export const providers = {
   gcswif: gcsWifProvider,
   azure_spi: azureSpiProvider,
   databricks: databricksProvider,
+  databricks_volumes: databricksVolumesProvider,
   // Local provider
   localfiles: localFilesProvider,
 };
